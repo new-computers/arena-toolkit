@@ -2,29 +2,41 @@
 // watch url & send to content
 //----------------------------
 
+var url = 'test';
 // send: background -> content
 chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
   if (changeInfo.status == 'complete') {
-    chrome.tabs.query(
-      { 'active': true, 'currentWindow': true },
+    chrome.tabs.query({ 'active': true, 'lastFocusedWindow': true },
       function(tabs) {
-        const send_background_content = tabs[0].url;
-        // console.log(send_background_content);
-        chrome.tabs.sendMessage(
-          tabs[0].id,
-          { "message": send_background_content },
-          function(response, sender, sendResponse) {
-            console.log(response.message);
-          }
-        )
-      }
-    )
+
+        if(tabs[0].url && tabs[0].id) {
+          //console.log(tabs[0].url);
+
+          // send to chrome storage
+          chrome.storage.local.set(
+            { "url": tabs[0].url },
+            function(){}
+          );
+        }
+      })
   }
 });
 
-// listen: content -> background
-chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-  console.log(request.message);
-  const receipt_background_content = "receipt: background -> content"
-  sendResponse({ message: receipt_background_content });
+
+// listen for storage changes
+chrome.storage.onChanged.addListener(function(changes, namespace) {
+  for (key in changes) {
+    var storageChange = changes[key];
+
+    // purescript binding
+    //var sendUrl = require('sendUrl');
+    //sendUrl.urlIn(storageChange.newValue);
+
+    console.log('key "%s" in namespace "%s" changed ' +
+                '"%s" -> "%s"',
+                key,
+                namespace,
+                storageChange.oldValue,
+                storageChange.newValue);
+  }
 });

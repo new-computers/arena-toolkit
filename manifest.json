@@ -9,7 +9,7 @@
     "matches": ["https://www.are.na/*"]
   }],
   "background": {
-    "scripts":["background.js"]
+    "scripts": ["background.js"]
   },
-  "permissions": [ "tabs" ]
+  "permissions": [ "tabs", "storage" ]
 }

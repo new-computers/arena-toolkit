@@ -40,12 +40,9 @@ arena_toolkit_resize.onclick = function() {
 const send_content_background = 'message: content -> background'
 chrome.runtime.sendMessage(
   { message: send_content_background },
-  function(response) { console.log(response.message); }
+  function(response) {
+    if(response.message) {
+      console.log(response.message)
+    }
+  }
 );
-
-// listen: background -> content
-chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-  console.log(request.message);
-  const receipt_content_background = 'receipt: content -> background'
-  sendResponse({ message: receipt_content_background })
-})

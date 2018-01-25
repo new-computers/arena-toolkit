@@ -8,6 +8,7 @@
   padding: 10px;
 }
 
+
 #arena_toolkit_resize {
   position: absolute;
   top: 2px;
@@ -37,6 +38,7 @@
   cursor: pointer;
 }
 
+
 #arena_toolkit_canvas {
   position: absolute;
   top: 0;
@@ -61,6 +63,7 @@
   height: 50px;
   width: 50px;
 }
+
 
 #arena_toolkit.open h7 {
   display: block;
