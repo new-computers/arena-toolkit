@@ -1,0 +1,15 @@
+{
+  "manifest_version": 2,
+  "name": "Are.na Toolkit",
+  "version": "0.1.0",
+  "description": "Community-built research tools.",
+  "content_scripts": [{
+    "css": ["style.css"],
+    "js": ["content.js"],
+    "matches": ["https://www.are.na/*"]
+  }],
+  "background": {
+    "scripts":["background.js"]
+  },
+  "permissions": [ "tabs" ]
+}

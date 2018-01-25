@@ -1,0 +1,73 @@
+#arena_toolkit {
+  position: fixed;
+  background: white;
+  border: 2px solid #cbcbcb;
+  z-index: 1000;
+  bottom: 10px;
+  right: 10px;
+  padding: 10px;
+}
+
+#arena_toolkit_resize {
+  position: absolute;
+  top: 2px;
+  right: 5px;
+  padding: 6px;
+  font-size: 22px;
+  font-weight: bold;
+  transform: rotate(45deg);
+  color: #9d9d9d;
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
+}
+
+#arena_toolkit.open #arena_toolkit_resize {
+    transform: rotate(0deg);
+}
+
+#arena_toolkit.closed #arena_toolkit_resize {
+ top: 6px;
+ right: 9px;
+}
+
+#arena_toolkit_resize:hover {
+  color: #585858;
+  cursor: pointer;
+}
+
+#arena_toolkit_canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: 1px solid #f2f2f2;
+  margin: 36px;
+  width: calc(100% - 72px);
+  height: calc(100% - 72px);
+}
+
+#arena_toolkit.closed #arena_toolkit_canvas {
+  border: none;
+}
+
+
+#arena_toolkit.open {
+  height: 500px;
+  width: 500px;
+}
+
+#arena_toolkit.closed {
+  height: 50px;
+  width: 50px;
+}
+
+#arena_toolkit.open h7 {
+  display: block;
+  margin-left: 9%;
+  display: none;
+}
+
+#arena_toolkit.closed h7 {
+  display: none;
+}
