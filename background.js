@@ -28,13 +28,7 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
   }
 });
 
-
-chrome.storage.local.set(
-  { "status": "reload" },
-  function() {
-    console.log("> background reloaded")
-  }
-)
+console.log("> background reloaded")
 
 
 //---------------------------
