@@ -12,13 +12,16 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
       function (tabs) {
         // discard empty objects
         if(tabs[0]) {
-          // send to globally accessible chrome storage
-          chrome.storage.local.set(
-            { "url": tabs[0].url },
-            function() {
-              // console.log("wrote " + tabs[0].url + " to storage")
-            }
-          )
+          // continue if last focused is are.na page
+          if(tabs[0].url.indexOf("are.na") > -1) {
+            // send to globally accessible chrome storage
+            chrome.storage.local.set(
+              { "url": tabs[0].url },
+              function() {
+                // console.log("wrote " + tabs[0].url + " to storage")
+              }
+            )
+          }
         }
       }
     )
@@ -26,34 +29,44 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
 });
 
 
+chrome.storage.local.set(
+  { "status": "reload" },
+  function() {
+    console.log("> background reloaded")
+  }
+)
+
+
 //---------------------------
 // listen for storage changes
 //---------------------------
 
 chrome.storage.onChanged.addListener(function(changes, namespace) {
-  for (key in changes) {
+  for(key in changes) {
     var storageChange = changes[key];
+    if(storageChange.newValue.indexOf("are.na") > -1) {
 
-    // extract user/slug from url
-    var user = storageChange.newValue.split("/")[3];
-    var slug = storageChange.newValue.split("/")[4];
+      // extract user/slug from url
+      var user = storageChange.newValue.split("/")[3];
+      var slug = storageChange.newValue.split("/")[4];
 
-    // extract state from arena's sharify object
-    // window.__sharifyData.USER.slug
-    // window.__sharifyData.CHANNEL.slug
-    // window.__sharifyData.CHANNEL.user_id
-    // window.__sharifyData.CURRENT_ACTION
+      // extract state from arena's sharify object
+      // window.__sharifyData.USER.slug
+      // window.__sharifyData.CHANNEL.slug
+      // window.__sharifyData.CHANNEL.user_id
+      // window.__sharifyData.CURRENT_ACTION
 
-    // purescript binding
-    var Bridge = PS.Bridge_MaybeNullable;
-    Bridge.provide(storageChange.newValue);
+      // purescript binding
+      // var Bridge = PS.Bridge_MaybeNullable;
+      // Bridge.provide(storageChange.newValue);
 
-    // log storage change
-    console.log('key "%s" in namespace "%s" changed ' +
-                '"%s" -> "%s"',
-                key,
-                namespace,
-                storageChange.oldValue,
-                storageChange.newValue);
+      // log storage change
+      console.log('key "%s" in namespace "%s" changed ' +
+                  '"%s" -> "%s"',
+                  key,
+                  namespace,
+                  storageChange.oldValue,
+                  storageChange.newValue);
+    }
   }
 });

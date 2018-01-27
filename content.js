@@ -40,8 +40,7 @@ Object.keys(arena_toolkit_tool).map((key, index) => {
     if(arena_toolkit_tool[key].classList.contains("arena_tool_closed")) {
       arena_toolkit_tool[key].classList.add("arena_tool_open");
       arena_toolkit_tool[key].classList.remove("arena_tool_closed");
-    }
-    else {
+    } else {
       arena_toolkit_tool[key].classList.add("arena_tool_closed");
       arena_toolkit_tool[key].classList.remove("arena_tool_open");
     }
@@ -49,9 +48,9 @@ Object.keys(arena_toolkit_tool).map((key, index) => {
 });
 
 
-//--------------------
-// update notification
-//--------------------
+//----------------------
+// reloaded notification
+//----------------------
 
 function updateNotification(message, duration) {
   var updated = document.createElement("h3");
@@ -71,3 +70,22 @@ function updateNotification(message, duration) {
 }
 
 updateNotification("reloaded", 4000);
+console.log('> content reloaded')
+
+//--------------------------------
+// watch for local sotrage changes
+//--------------------------------
+
+chrome.storage.onChanged.addListener(function(changes, namespace) {
+
+  for (key in changes) {
+    var storageChange = changes[key];
+    // log storage change
+    console.log('key "%s" in namespace "%s" changed ' +
+              '"%s" -> "%s"',
+              key,
+              namespace,
+              storageChange.oldValue,
+              storageChange.newValue);
+  }
+});
