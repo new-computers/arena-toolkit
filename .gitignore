@@ -1,0 +1,10 @@
+/tools/*/bower_components/
+/tools/*/node_modules/
+/tools/*/.pulp-cache/
+/tools/*/output/
+/tools/*/generated-docs/
+/tools/*/.psc-package/
+/tools/*/.psc*
+/tools/*/.purs*
+/tools/*/.psa*
+/tools/*/.purs-repl

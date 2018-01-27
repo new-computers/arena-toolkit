@@ -1,21 +1,35 @@
+/* toolkit */
+
 #arena_toolkit {
-  position: fixed;
+    position: fixed;
+    bottom: 0px;
+    right: 0px;
+    z-index: 3000;
+}
+
+.arena_tool {
+  margin: 10px 10px 10px auto;
+  display: flex;
   background: white;
   border: 2px solid #cbcbcb;
-  z-index: 1000;
-  bottom: 10px;
-  right: 10px;
   padding: 10px;
 }
 
+.arena_tool_open {
+    height: 440px;
+    width: 440px;
+}
 
-#arena_toolkit_resize {
-  position: absolute;
-  top: 2px;
-  right: 5px;
+.arena_tool_closed {
+    height: 50px;
+    width: 50px;
+}
+
+/* tool */
+.arena_tool_resize {
+  margin: -2px -1px;
+  display: block;
   padding: 6px;
-  font-size: 22px;
-  font-weight: bold;
   transform: rotate(45deg);
   color: #9d9d9d;
   -webkit-user-select: none; /* Safari */
@@ -24,53 +38,51 @@
   user-select: none; /* Standard */
 }
 
-#arena_toolkit.open #arena_toolkit_resize {
+.arena_tool_open .arena_tool_resize {
     transform: rotate(0deg);
+    position: absolute;
+    right: 22px;
 }
 
-#arena_toolkit.closed #arena_toolkit_resize {
- top: 6px;
- right: 9px;
+.arena_tool_closed .arena_tool_resize {
 }
 
-#arena_toolkit_resize:hover {
+.arena_tool_resize:hover {
   color: #585858;
   cursor: pointer;
 }
 
-
-#arena_toolkit_canvas {
-  position: absolute;
-  top: 0;
-  left: 0;
+.arena_tool_canvas {
   border: 1px solid #f2f2f2;
-  margin: 36px;
-  width: calc(100% - 72px);
-  height: calc(100% - 72px);
+  margin: 32px;
+  width: calc(100% - 64px);
+  height: calc(100% - 64px);
 }
 
-#arena_toolkit.closed #arena_toolkit_canvas {
+.arena_tool_closed .arena_tool_canvas {
   border: none;
 }
 
 
-#arena_toolkit.open {
-  height: 500px;
-  width: 500px;
+/* updated notification */
+.arena_toolkit_updated {
+  z-index: 2000;
+  position: fixed;
+  padding: 8px 15px;
+  bottom: 10px;
+  left: 10px;
+  background: white;
+  border: solid 2px #cbcbcb;
 }
 
-#arena_toolkit.closed {
-  height: 50px;
-  width: 50px;
+.arena_toolkit_updated_visible {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.2s linear;
 }
 
-
-#arena_toolkit.open h7 {
-  display: block;
-  margin-left: 9%;
-  display: none;
-}
-
-#arena_toolkit.closed h7 {
-  display: none;
+.arena_toolkit_updated_hidden {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s 0.2s, opacity 0.2s linear;
 }
