@@ -5,4 +5,4 @@ The [Are.na Toolkit](https://www.are.na/sam-hart/are-na-toolkit) is a place for 
 
 ## Notes
 
-Repo includes a modified version of xpl's hot reloading [script](https://github.com/xpl/crx-hotreload) to update background script and auto-refresh last focused window.
+Repo includes a modified version of xpl's hot reloading [script](https://github.com/xpl/crx-hotreload) to update background script and auto-refresh last focused window on save.
