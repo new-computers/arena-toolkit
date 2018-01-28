@@ -22,11 +22,11 @@ function newTool(tool_name) {
   arena_toolkit.appendChild(arena_tool);
 }
 
-newTool("print");
+newTool("arena_toolkit_print");
 
-newTool("maps");
+newTool("arena_toolkit_maps");
 
-newTool("radio");
+newTool("arena_toolkit_radio");
 
 
 //---------------
@@ -82,7 +82,6 @@ chrome.storage.local.get(['status'], function(items) {
 });
 
 
-
 //--------------------------------
 // watch for local sotrage changes
 //--------------------------------
@@ -100,3 +99,13 @@ chrome.storage.onChanged.addListener(function(changes, namespace) {
               storageChange.newValue);
   }
 });
+
+
+//-----------------
+// toolkit settings
+//-----------------
+
+//if(window.location.href.indexOf('are.na/tools/') > -1) {
+//  console.log('hello!')
+//}
+//  <li class="tab--container__nav__item tab--container__nav__item--bookmarklet is-active"><h5><a href="/tools/bookmarklet">Bookmarklet</a></h5></li>

@@ -9,7 +9,7 @@
     "matches": ["https://www.are.na/*"]
   }],
   "background": {
-    "scripts": ["tools/maps/pure.js", "background.js", "reload.js"]
+    "scripts": ["tools/maps/pure.js", "background.js", "reload.js", "tools/maps/bower_components/vis/dist/vis.js"]
   },
   "permissions": ["tabs", "storage"]
 }

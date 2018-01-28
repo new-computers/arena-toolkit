@@ -8,3 +8,4 @@
 /tools/*/.purs*
 /tools/*/.psa*
 /tools/*/.purs-repl
+.#*
