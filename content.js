@@ -99,13 +99,3 @@ chrome.storage.onChanged.addListener(function(changes, namespace) {
               storageChange.newValue);
   }
 });
-
-
-//-----------------
-// toolkit settings
-//-----------------
-
-//if(window.location.href.indexOf('are.na/tools/') > -1) {
-//  console.log('hello!')
-//}
-//  <li class="tab--container__nav__item tab--container__nav__item--bookmarklet is-active"><h5><a href="/tools/bookmarklet">Bookmarklet</a></h5></li>
