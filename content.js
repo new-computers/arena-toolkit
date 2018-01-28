@@ -69,8 +69,19 @@ function updateNotification(message, duration) {
   document.body.appendChild(updated);
 }
 
-updateNotification("reloaded", 4000);
-console.log('> content reloaded')
+chrome.storage.local.get(['status'], function(items) {
+  if(items.status === 'reloaded') {
+    // notification
+    updateNotification("reloaded", 4000);
+    console.log('> content reloaded')
+    // record reloaded message
+    chrome.storage.local.set({'status': 'notified'}, function() {
+      console.log('> notified');
+    });
+  }
+});
+
+
 
 //--------------------------------
 // watch for local sotrage changes

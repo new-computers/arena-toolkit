@@ -28,7 +28,12 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
   }
 });
 
-console.log("> background reloaded")
+chrome.storage.local.set(
+  { 'status': 'reloaded' },
+  function() {
+    console.log("> background reloaded")
+  }
+)
 
 
 //---------------------------
@@ -38,7 +43,7 @@ console.log("> background reloaded")
 chrome.storage.onChanged.addListener(function(changes, namespace) {
   for(key in changes) {
     var storageChange = changes[key];
-    if(storageChange.newValue.indexOf("are.na") > -1) {
+    if(storageChange.newValue.indexOf('are.na') > -1) {
 
       // extract user/slug from url
       var user = storageChange.newValue.split("/")[3];
