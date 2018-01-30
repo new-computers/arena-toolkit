@@ -134,13 +134,32 @@ window.addEventListener( 'message', function( event ) {
   }
   if ( event.data.type && ( event.data.type == 'arena_data' ) ) {
 
-    // console.log( event.data.object );
+    var arena_data = event.data.object;
+    //console.log( arena_data );
 
-    if ( event.data.object.CURRENT_ACTION && event.data.object.CURRENT_ACTION == 'channel') {
-      console.log('this is a channel');
-    } else if ( event.data.object.CURRENT_ACTION && event.data.object.CURRENT_ACTION == 'profile' ) {
-      console.log('this is a profile');
+    if ( arena_data.CURRENT_ACTION &&
+         arena_data.CURRENT_ACTION == 'channel' ) {
+
+      console.log( 'this is a channel' );
+      console.log( arena_data.CURRENT_PATH );
+      console.log( arena_data.CHANNEL.slug );
+      console.log( arena_data.CHANNEL.id );
+      console.log( arena_data.CHANNEL.title );
+      console.log( arena_data.CHANNEL.status );
+      console.log( arena_data.CHANNEL.user.id );
+      console.log( arena_data.CHANNEL.user.slug );
+      console.log( arena_data.CHANNEL.user.full_name );
+
+    } else if ( arena_data.CURRENT_ACTION &&
+                arena_data.CURRENT_ACTION == 'profile' ) {
+
+      console.log( 'this is a profile' );
+      console.log( arena_data.CURRENT_PATH );
+      console.log( arena_data.USER.slug );
+      console.log( arena_data.USER.username );
+      console.log( arena_data.USER.profile_id );
+      console.log( arena_data.USER.avatar_image.display );
+
     }
-
   }
 });
