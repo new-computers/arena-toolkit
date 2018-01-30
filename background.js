@@ -14,7 +14,7 @@ chrome.tabs.onUpdated.addListener( function( tabId, changeInfo, tab ) {
         if ( tabs[ 0 ] ) {
           // continue if last focused is are.na page
           if( tabs[ 0 ].url.indexOf( 'are.na' ) > -1 ) {
-            // send to globally accessible chrome storage
+            // send to globally accessible chrome
             chrome.storage.local.set(
               { 'url': tabs[ 0 ].url },
               function() {

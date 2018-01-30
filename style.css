@@ -57,6 +57,15 @@
   margin: 32px;
   width: calc(100% - 64px);
   height: calc(100% - 64px);
+  overflow: auto;
+}
+.arena_tool_canvas ul {
+  margin: 0.8em 1em;
+}
+.arena_tool_canvas li {
+  list-style-type: square;
+  padding: 0.2em 0;
+  list-style-position: inside;
 }
 
 .arena_tool_closed .arena_tool_canvas {
