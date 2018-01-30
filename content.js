@@ -2,7 +2,6 @@
 // append toolkit div
 //-------------------
 
-
 const arena_toolkit = document.createElement( 'div' );
 arena_toolkit.setAttribute( 'id', 'arena_toolkit' );
 document.body.appendChild( arena_toolkit );
@@ -11,7 +10,6 @@ document.body.appendChild( arena_toolkit );
 //--------------
 // attatch tools
 //--------------
-
 
 function newTool( tool_name ) {
 
@@ -97,29 +95,9 @@ chrome.storage.local.get( [ 'status' ], function( items ) {
     chrome.storage.local.set(
       { 'status': 'notified' },
       function() {
-        console.log( '> notified' );
+        // console.log( '> notified' );
       }
     );
-  }
-});
-
-
-//---------------------------
-// listen for storage changes
-//---------------------------
-
-chrome.storage.onChanged.addListener( function( changes, namespace ) {
-
-  for ( key in changes ) {
-
-    let storageChange = changes[ key ];
-    // log storage change
-    console.log( 'key "%s" in namespace "%s" changed ' +
-                 '"%s" -> "%s"',
-                 key,
-                 namespace,
-                 storageChange.oldValue,
-                 storageChange.newValue );
   }
 });
 
@@ -129,92 +107,98 @@ chrome.storage.onChanged.addListener( function( changes, namespace ) {
 //----------------------------------------
 
 window.addEventListener( 'message', function( event ) {
-  if ( event.source != window ) {
-    return;
-  }
-  if ( event.data.type && ( event.data.type == 'arena_data' ) ) {
 
-    var arena_data = event.data.object;
-    //console.log( arena_data );
+  if ( event.source != window ) { return; }
+
+  if ( event.data.type && event.data.type == 'arena_data' ) {
+
+    var arena_data   = event.data.object;
+    var current_path = arena_data.CURRENT_PATH;
 
     if ( arena_data.CURRENT_ACTION ) {
 
-      var current_path = arena_data.CURRENT_PATH;
-      var current_slug = '';
+      var current_slug  = '';
       var current_title = '';
 
       if ( arena_data.CURRENT_ACTION == 'channel' ) {
 
-        //console.log( 'this is a channel' );
-        //console.log( arena_data.CHANNEL.slug );
         current_slug = arena_data.CHANNEL.slug;
-        //console.log( arena_data.CHANNEL.id );
-        //console.log( arena_data.CHANNEL.title );
         current_title = arena_data.CHANNEL.title;
-        //console.log( arena_data.CHANNEL.status );
-        //console.log( arena_data.CHANNEL.user.id );
-        //console.log( arena_data.CHANNEL.user.slug );
-        //console.log( arena_data.CHANNEL.user.full_name );
-
+        // arena_data.CHANNEL.id
+        // arena_data.CHANNEL.status
+        // arena_data.CHANNEL.user.id
+        // arena_data.CHANNEL.user.slug
+        // arena_data.CHANNEL.user.full_name
 
       } else if ( arena_data.CURRENT_ACTION == 'profile' ) {
 
-        //console.log( 'this is a profile' );
-        //console.log( arena_data.USER.slug );
         current_slug = arena_data.USER.slug;
-        //console.log( arena_data.USER.username );
         current_title = arena_data.USER.username;
-        //console.log( arena_data.USER.profile_id );
-        //console.log( arena_data.USER.avatar_image.display );
+        // arena_data.USER.profile_id
+        // arena_data.USER.avatar_image.display
 
       }
-
     }
-
   }
 
+  var slugs_list  = [''];
+  var titles_list = [''];
 
-  var slugs_list = [];
-  var titles_list = [];
-
-  chrome.storage.local.get( [ 'slugs', 'titles' ], function( data ) {
-
-    if ( data.slugs ) {
-      slugs_list = [ current_slug ].concat( data.slugs );
-    } else {
-      slugs_list = [ current_slug ]
-    }
-
-    if ( data.titles ) {
-      titles_list = [ current_title ].concat( data.titles );
-    } else {
-      titles_list = [ current_title ]
-    }
-
-    chrome.storage.local.set(
-      { 'slugs': slugs_list, 'titles': titles_list },
-      function() {}
+  function getStored( fn ) {
+    chrome.storage.local.get(
+      [ 'slugs', 'titles' ],
+      function ( data ) {
+        if ( data.slugs && data.titles && current_slug && current_title ) {
+          slugs_list  = [ current_slug ].concat( data.slugs );
+          titles_list = [ current_title ].concat( data.titles );
+        } else if ( current_slug && current_title ) {
+          slugs_list  = [ current_slug ]
+          titles_list = [ current_title ]
+        } else {
+          slugs_list  = data.slugs;
+          titles_list = data.titles;
+        }
+        fn( { slugs: slugs_list, titles: titles_list } )
+      }
     )
+  }
 
-    console.log( slugs_list );
-    console.log( titles_list );
+  getStored(
+    function( data ) {
 
-    var canvas = document.getElementById( 'arena_toolkit_maps' ).getElementsByClassName( 'arena_tool_canvas' )[0];
-    var canvas_list = document.createElement( 'ul' );
-    var i;
-    for(i = 0; i < slugs_list.length; i++) {
-      console.log(slugs_list[ i ]);
-      canvas_list.innerHTML += '<li><a href="https://are.na/' +  slugs_list[ i ] + '">' + titles_list[ i ] + '</a></li>';
+      console.log( data );
+
+      var slugs_list = data.slugs.filter(function(x){
+        return (x !== (undefined || null || ''));
+      });
+
+      var titles_list = data.titles.filter(function(x){
+        return (x !== (undefined || null || ''));
+      });
+
+      console.log(slugs_list.filter(String));
+
+      var canvas = document.getElementById( 'arena_toolkit_maps' ).getElementsByClassName( 'arena_tool_canvas' )[ 0 ];
+      var canvas_list = document.createElement( 'ul' );
+
+      for( var i = 0; i < slugs_list.length; i++ ) {
+        canvas_list.innerHTML += '<li><a href="https://are.na/' +  slugs_list[ i ] + '">' + titles_list[ i ] + '</a></li>';
+      }
+      canvas.appendChild( canvas_list );
+
+      chrome.storage.local.set(
+        { 'slugs': slugs_list, 'titles': titles_list },
+        function() {}
+      )
     }
-    canvas.appendChild( canvas_list );
+  );
 
-    //chrome.storage.local.remove( [ 'slugs', 'titles' ],function(){
-    //  var error = chrome.runtime.lastError;
-    //  if (error) {
-    //    console.error(error);
-    //  }
-    //})
-
-  });
+  //chrome.storage.local.remove(
+  //  [ 'slugs', 'titles' ],
+  //  function() {
+  //    var error = chrome.runtime.lastError;
+  //    if ( error ) { console.error( error ); }
+  //  }
+  //)
 
 });
