@@ -30,6 +30,17 @@ newTool( 'arena_toolkit_radio' );
 newTool( 'arena_toolkit_maps' );
 
 
+//------------------------
+// attatch settings button
+//------------------------
+
+let arena_toolkit_settings = document.createElement( 'div' );
+
+arena_toolkit_settings.setAttribute( 'id', 'arena_toolkit_settings' );
+
+arena_toolkit.appendChild( arena_toolkit_settings );
+
+
 //---------------
 // resizing logic
 //---------------
@@ -39,11 +50,11 @@ let arena_toolkit_tool = document.getElementsByClassName( 'arena_tool' );
 Object.keys( arena_toolkit_tool ).map( ( key, index ) => {
 
   // shamefully hacky way to retain window state
-  chrome.storage.local.get( [ 'tool_state' ], function( tool ) {
+  chrome.storage.local.get( [ 'tool_state' ], function( settings ) {
 
-    if( tool.tool_state[ 1 ] == 'open' ) {
-      arena_toolkit_tool[ tool.tool_state[ 0 ] ].classList.remove( 'arena_tool_closed' );
-      arena_toolkit_tool[ tool.tool_state[ 0 ] ].classList.add( 'arena_tool_open' );
+    if( settings.tool_state[ 1 ] == 'open' ) {
+      arena_toolkit_tool[ settings.tool_state[ 0 ] ].classList.remove( 'arena_tool_closed' );
+      arena_toolkit_tool[ settings.tool_state[ 0 ] ].classList.add( 'arena_tool_open' );
     }
 
   });
@@ -93,6 +104,46 @@ chrome.storage.onChanged.addListener( function( changes, namespace ) {
   }
 });
 
+
+//---------------
+// settings logic
+//---------------
+
+chrome.storage.local.get( [ 'dev_state' ], function( settings ) {
+
+  if( settings.dev_state == 'dev' ) {
+    arena_toolkit_settings.classList.add( 'arena_toolkit_settings_dev' );
+  } else {
+    arena_toolkit_settings.classList.remove( 'arena_toolkit_settings_dev' );
+  }
+
+});
+
+
+var dev_state;
+
+arena_toolkit_settings.onclick = function() {
+
+  if ( arena_toolkit_settings.classList.contains( 'arena_toolkit_settings_dev' ) ) {
+
+    arena_toolkit_settings.classList.remove( 'arena_toolkit_settings_dev' );
+
+    chrome.storage.local.set(
+      { dev_state: 'default' },
+      function() { dev_state = 'default'; }
+    )
+  } else {
+    arena_toolkit_settings.classList.add( 'arena_toolkit_settings_dev' );
+
+    chrome.storage.local.set(
+      { dev_state: 'dev' },
+      function() { dev_state = 'dev'; }
+    )
+  }
+}
+
+console.log(dev_state);
+
 //----------------------
 // reloaded notification
 //----------------------
@@ -121,9 +172,10 @@ function updateNotification( message, duration ) {
 }
 
 
-chrome.storage.local.get( [ 'status' ], function( items ) {
 
-  if ( items.status === 'reloaded' ) {
+chrome.storage.local.get( [ 'status', 'dev_state' ], function( settings ) {
+
+  if ( settings.status == 'reloaded' && settings.dev_state == 'dev' ) {
 
     // notification
     updateNotification( 'reloaded', 4000 );

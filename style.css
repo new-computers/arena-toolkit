@@ -7,6 +7,24 @@
     z-index: 3000;
 }
 
+#arena_toolkit_settings {
+  margin: 10px 10px 10px auto;
+  display: flex;
+  border: 2px solid #cbcbcb;
+  padding: 10px;
+  height: 5px;
+  width: 50px;
+  background: white;
+}
+
+#arena_toolkit_settings:hover {
+  cursor: pointer;
+}
+
+#arena_toolkit_settings.arena_toolkit_settings_dev {
+  background: #cbcbcb;
+}
+
 .arena_tool {
   margin: 10px 10px 10px auto;
   display: flex;
@@ -25,7 +43,6 @@
     width: 50px;
 }
 
-/* tool */
 .arena_tool_resize {
   margin: -2px -1px;
   display: block;
