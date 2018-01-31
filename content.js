@@ -38,6 +38,17 @@ let arena_toolkit_tool = document.getElementsByClassName( 'arena_tool' );
 
 Object.keys( arena_toolkit_tool ).map( ( key, index ) => {
 
+  // shamefully hacky way to remember window state
+  chrome.storage.local.get( [ 'tool_state' ], function( tool ) {
+
+    if( tool.tool_state[ 1 ] == 'open' ) {
+      arena_toolkit_tool[ tool.tool_state[ 0 ] ].classList.remove( 'arena_tool_closed' );
+      arena_toolkit_tool[ tool.tool_state[ 0 ] ].classList.add( 'arena_tool_open' );
+    }
+
+  });
+
+
   arena_toolkit_tool[ key ].onclick = function() {
 
     if ( arena_toolkit_tool[ key ].classList.contains( "arena_tool_closed" ) ) {
@@ -45,15 +56,42 @@ Object.keys( arena_toolkit_tool ).map( ( key, index ) => {
       arena_toolkit_tool[ key ].classList.add( "arena_tool_open" );
       arena_toolkit_tool[ key ].classList.remove( "arena_tool_closed" );
 
+      chrome.storage.local.set(
+        { tool_state: [ key, 'open' ] },
+        function() {}
+      )
+
     } else {
 
       arena_toolkit_tool[ key ].classList.add( "arena_tool_closed" );
       arena_toolkit_tool[ key ].classList.remove( "arena_tool_open" );
 
+      chrome.storage.local.set(
+        { tool_state: [ key, 'closed' ] },
+        function() {}
+      )
+
     }
   }
 });
 
+
+chrome.storage.onChanged.addListener( function( changes, namespace ) {
+
+  for( key in changes ) {
+
+    let storageChange = changes[ key ];
+
+    // log storage change
+    console.log( 'key "%s" in namespace "%s" changed ' +
+                 '"%s" -> "%s"',
+                 key,
+                 namespace,
+                 storageChange.oldValue,
+                 storageChange.newValue );
+    console.log( storageChange.newValue );
+  }
+});
 
 //----------------------
 // reloaded notification
@@ -108,6 +146,7 @@ chrome.storage.local.get( [ 'status' ], function( items ) {
 
 window.addEventListener( 'message', function( event ) {
 
+  // only window data
   if ( event.source != window ) { return; }
 
   if ( event.data.type && event.data.type == 'arena_data' ) {
@@ -122,7 +161,7 @@ window.addEventListener( 'message', function( event ) {
 
       if ( arena_data.CURRENT_ACTION == 'channel' ) {
 
-        current_slug = arena_data.CHANNEL.slug;
+        current_slug  = arena_data.CHANNEL.slug;
         current_title = arena_data.CHANNEL.title;
         // arena_data.CHANNEL.id
         // arena_data.CHANNEL.status
@@ -132,7 +171,7 @@ window.addEventListener( 'message', function( event ) {
 
       } else if ( arena_data.CURRENT_ACTION == 'profile' ) {
 
-        current_slug = arena_data.USER.slug;
+        current_slug  = arena_data.USER.slug;
         current_title = arena_data.USER.username;
         // arena_data.USER.profile_id
         // arena_data.USER.avatar_image.display
@@ -166,7 +205,7 @@ window.addEventListener( 'message', function( event ) {
   getStored(
     function( data ) {
 
-      console.log( data );
+      // console.log( data );
 
       var slugs_list = data.slugs.filter(function(x){
         return (x !== (undefined || null || ''));
@@ -176,14 +215,13 @@ window.addEventListener( 'message', function( event ) {
         return (x !== (undefined || null || ''));
       });
 
-      console.log(slugs_list.filter(String));
-
       var canvas = document.getElementById( 'arena_toolkit_maps' ).getElementsByClassName( 'arena_tool_canvas' )[ 0 ];
       var canvas_list = document.createElement( 'ul' );
 
       for( var i = 0; i < slugs_list.length; i++ ) {
         canvas_list.innerHTML += '<li><a href="https://are.na/' +  slugs_list[ i ] + '">' + titles_list[ i ] + '</a></li>';
       }
+
       canvas.appendChild( canvas_list );
 
       chrome.storage.local.set(
