@@ -65,7 +65,7 @@
 .arena_tool_canvas li {
   list-style-type: square;
   padding: 0.2em 0;
-  list-style-position: inside;
+  margin-left: 10px;
 }
 
 .arena_tool_closed .arena_tool_canvas {

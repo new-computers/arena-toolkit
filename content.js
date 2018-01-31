@@ -38,7 +38,7 @@ let arena_toolkit_tool = document.getElementsByClassName( 'arena_tool' );
 
 Object.keys( arena_toolkit_tool ).map( ( key, index ) => {
 
-  // shamefully hacky way to remember window state
+  // shamefully hacky way to retain window state
   chrome.storage.local.get( [ 'tool_state' ], function( tool ) {
 
     if( tool.tool_state[ 1 ] == 'open' ) {
@@ -48,7 +48,7 @@ Object.keys( arena_toolkit_tool ).map( ( key, index ) => {
 
   });
 
-
+  // add listener to monitor
   arena_toolkit_tool[ key ].onclick = function() {
 
     if ( arena_toolkit_tool[ key ].classList.contains( "arena_tool_closed" ) ) {

@@ -8,9 +8,10 @@ The [Are.na Toolkit](https://www.are.na/sam-hart/are-na-toolkit) is a developmen
 
 New tools welcome by pull request. Or, fork this repo and make your own project.
 
-Use any framework or language you like. Start by adding your tool code to a new directory in /tools, add any requred imports to manifest.json, and then see /content.js and /background.js for examples on how to begin.
+Use any framework or language you like. Start by placing your tool code into a new subdirectory of /tools, add any requred imports to manifest.json, and then see /content.js and /background.js for examples on how to begin.
 
-Core code will aim for [idomatic.js](https://github.com/rwaldron/idiomatic.js/), but tool code can be developed in the style of the author's choosing.
+
+Core code will aim for [idomatic.js](https://github.com/rwaldron/idiomatic.js/), but tools can be developed in the style of the author's choosing.
 
 ## Notes
 
