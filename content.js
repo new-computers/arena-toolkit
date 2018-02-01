@@ -25,8 +25,8 @@ function newTool( tool_name ) {
 }
 
 newTool( 'arena_toolkit_print' );
-newTool( 'arena_toolkit_radio' );
 newTool( 'arena_toolkit_maps' );
+newTool( 'arena_toolkit_history' );
 
 
 //------------------------
@@ -40,6 +40,7 @@ arena_toolkit_settings.setAttribute( 'id', 'arena_toolkit_settings' );
 arena_toolkit.appendChild( arena_toolkit_settings );
 
 arena_toolkit_settings.innerHTML = '<h6 class="arena_toolkit_settings_text">debug</h6>';
+
 
 //---------------
 // resizing logic
@@ -236,7 +237,7 @@ window.addEventListener( 'message', function( event ) {
     )
   }
 
-  var canvas      = document.getElementById( 'arena_toolkit_maps' ).getElementsByClassName( 'arena_tool_canvas' )[ 0 ];
+  var canvas      = document.getElementById( 'arena_toolkit_history' ).getElementsByClassName( 'arena_tool_canvas' )[ 0 ];
   var canvas_list = document.createElement( 'ul' );
 
   getStored(
@@ -263,7 +264,7 @@ window.addEventListener( 'message', function( event ) {
 
   var refresh = document.createElement( 'div' );
   refresh.innerHTML = '<div class="arena_toolkit_history_refresh">♺</div>';
-  document.getElementById( 'arena_toolkit_maps' ).appendChild( refresh );
+  document.getElementById( 'arena_toolkit_history' ).appendChild( refresh );
 
   refresh.onclick = function() {
 
