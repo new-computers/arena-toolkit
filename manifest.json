@@ -5,12 +5,23 @@
   "description": "Access to tools",
   "content_scripts": [{
     "css": ["style.css"],
-    "js": ["inject.js", "content.js"],
+    "js": [
+      "inject.js",
+      "content.js"
+      ],
     "matches": ["https://www.are.na/*"]
   }],
   "background": {
-    "scripts": ["tools/maps/pure.js", "background.js", "reload.js", "tools/maps/bower_components/vis/dist/vis.js"]
+    "scripts": [
+      "tools/maps/pure.js",
+      "background.js",
+      "reload.js",
+      "tools/maps/bower_components/vis/dist/vis.js"
+      ]
   },
   "web_accessible_resources" : ["relay.js"],
-  "permissions": ["tabs", "storage"]
+  "permissions": [
+    "tabs",
+    "storage"
+  ]
 }

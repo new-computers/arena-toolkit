@@ -15,6 +15,7 @@
   height: 5px;
   width: 50px;
   background: white;
+  position: relative;
 }
 
 #arena_toolkit_settings:hover {
@@ -25,12 +26,31 @@
   background: #cbcbcb;
 }
 
+.arena_toolkit_settings_text {
+  font-size: 0.65rem;
+  position: absolute;
+  bottom: 6px;
+  right: 16px;
+  display: none;
+}
+
+.arena_toolkit_settings_dev .arena_toolkit_settings_text {
+  color: white;
+  display: block;
+  margin: 2px auto;
+  width: 100%;
+  bottom: 0;
+  right: 0;
+  text-align: center;
+}
+
 .arena_tool {
   margin: 10px 10px 10px auto;
   display: flex;
   background: white;
   border: 2px solid #cbcbcb;
   padding: 10px;
+  position: relative;
 }
 
 .arena_tool_open {
@@ -58,7 +78,7 @@
 .arena_tool_open .arena_tool_resize {
     transform: rotate(0deg);
     position: absolute;
-    right: 22px;
+    right: 10px;
 }
 
 .arena_tool_closed .arena_tool_resize {
@@ -76,12 +96,15 @@
   height: calc(100% - 64px);
   overflow: auto;
 }
+
 .arena_tool_canvas ul {
-  margin: 0.8em 1em;
+  margin: 0.5em 0.8em;
 }
+
 .arena_tool_canvas li {
   list-style-type: square;
   padding: 0.2em 0;
+  line-height: 1.2em;
   margin-left: 10px;
 }
 
@@ -89,6 +112,21 @@
   border: none;
 }
 
+.arena_toolkit_history_refresh {
+  right: 52px;
+  bottom: 50px;
+  position: absolute;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.arena_toolkit_history_refresh:hover {
+  cursor: pointer;
+}
+
+.arena_tool_closed .arena_toolkit_history_refresh {
+  display: none;
+}
 
 /* updated notification */
 .arena_toolkit_updated {

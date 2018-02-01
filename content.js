@@ -24,7 +24,6 @@ function newTool( tool_name ) {
 
 }
 
-
 newTool( 'arena_toolkit_print' );
 newTool( 'arena_toolkit_radio' );
 newTool( 'arena_toolkit_maps' );
@@ -40,6 +39,7 @@ arena_toolkit_settings.setAttribute( 'id', 'arena_toolkit_settings' );
 
 arena_toolkit.appendChild( arena_toolkit_settings );
 
+arena_toolkit_settings.innerHTML = '<h6 class="arena_toolkit_settings_text">debug</h6>';
 
 //---------------
 // resizing logic
@@ -60,7 +60,7 @@ Object.keys( arena_toolkit_tool ).map( ( key, index ) => {
   });
 
   // add listener to monitor
-  arena_toolkit_tool[ key ].onclick = function() {
+  arena_toolkit_tool[ key ].getElementsByClassName( 'arena_tool_resize' )[ 0 ].onclick = function() {
 
     if ( arena_toolkit_tool[ key ].classList.contains( "arena_tool_closed" ) ) {
 
@@ -87,27 +87,9 @@ Object.keys( arena_toolkit_tool ).map( ( key, index ) => {
 });
 
 
-chrome.storage.onChanged.addListener( function( changes, namespace ) {
-
-  for( key in changes ) {
-
-    let storageChange = changes[ key ];
-
-    // log storage change
-    console.log( 'key "%s" in namespace "%s" changed ' +
-                 '"%s" -> "%s"',
-                 key,
-                 namespace,
-                 storageChange.oldValue,
-                 storageChange.newValue );
-    console.log( storageChange.newValue );
-  }
-});
-
-
-//---------------
-// settings logic
-//---------------
+//-------------------
+// debug toggle logic
+//-------------------
 
 chrome.storage.local.get( [ 'dev_state' ], function( settings ) {
 
@@ -130,19 +112,18 @@ arena_toolkit_settings.onclick = function() {
 
     chrome.storage.local.set(
       { dev_state: 'default' },
-      function() { dev_state = 'default'; }
+      function() {}
     )
   } else {
     arena_toolkit_settings.classList.add( 'arena_toolkit_settings_dev' );
 
     chrome.storage.local.set(
       { dev_state: 'dev' },
-      function() { dev_state = 'dev'; }
+      function() {}
     )
   }
 }
 
-console.log(dev_state);
 
 //----------------------
 // reloaded notification
@@ -170,8 +151,6 @@ function updateNotification( message, duration ) {
 
   document.body.appendChild( updated );
 }
-
-
 
 chrome.storage.local.get( [ 'status', 'dev_state' ], function( settings ) {
 
@@ -232,63 +211,71 @@ window.addEventListener( 'message', function( event ) {
     }
   }
 
-  var slugs_list  = [''];
-  var titles_list = [''];
+  var slugs  = [''];
+  var titles = [''];
 
-  function getStored( fn ) {
+  function getStored( callback ) {
     chrome.storage.local.get(
       [ 'slugs', 'titles' ],
+
       function ( data ) {
+
         if ( data.slugs && data.titles && current_slug && current_title ) {
-          slugs_list  = [ current_slug ].concat( data.slugs );
-          titles_list = [ current_title ].concat( data.titles );
+          slugs  = [ current_slug ].concat( data.slugs );
+          titles = [ current_title ].concat( data.titles );
         } else if ( current_slug && current_title ) {
-          slugs_list  = [ current_slug ]
-          titles_list = [ current_title ]
+          slugs  = [ current_slug ]
+          titles = [ current_title ]
         } else {
-          slugs_list  = data.slugs;
-          titles_list = data.titles;
+          slugs  = data.slugs;
+          titles = data.titles;
         }
-        fn( { slugs: slugs_list, titles: titles_list } )
+
+        callback( { slugs: slugs, titles: titles } )
       }
     )
   }
 
+  var canvas      = document.getElementById( 'arena_toolkit_maps' ).getElementsByClassName( 'arena_tool_canvas' )[ 0 ];
+  var canvas_list = document.createElement( 'ul' );
+
   getStored(
     function( data ) {
 
-      // console.log( data );
+      if ( data.slugs && data.titles ) {
 
-      var slugs_list = data.slugs.filter(function(x){
-        return (x !== (undefined || null || ''));
-      });
+        var slugs  = data.slugs;
+        var titles = data.titles;
 
-      var titles_list = data.titles.filter(function(x){
-        return (x !== (undefined || null || ''));
-      });
+        chrome.storage.local.set(
+          { 'slugs': slugs, 'titles': titles },
+          function() {}
+        )
 
-      var canvas = document.getElementById( 'arena_toolkit_maps' ).getElementsByClassName( 'arena_tool_canvas' )[ 0 ];
-      var canvas_list = document.createElement( 'ul' );
+        for( var i = 0; i < slugs.length; i++ ) {
+          canvas_list.innerHTML += '<li><a href="https://are.na/' +  slugs[ i ] + '">' + titles[ i ] + '</a></li>';
+        }
 
-      for( var i = 0; i < slugs_list.length; i++ ) {
-        canvas_list.innerHTML += '<li><a href="https://are.na/' +  slugs_list[ i ] + '">' + titles_list[ i ] + '</a></li>';
+        canvas.appendChild( canvas_list );
       }
-
-      canvas.appendChild( canvas_list );
-
-      chrome.storage.local.set(
-        { 'slugs': slugs_list, 'titles': titles_list },
-        function() {}
-      )
     }
   );
 
-  //chrome.storage.local.remove(
-  //  [ 'slugs', 'titles' ],
-  //  function() {
-  //    var error = chrome.runtime.lastError;
-  //    if ( error ) { console.error( error ); }
-  //  }
-  //)
+  var refresh = document.createElement( 'div' );
+  refresh.innerHTML = '<div class="arena_toolkit_history_refresh">♺</div>';
+  document.getElementById( 'arena_toolkit_maps' ).appendChild( refresh );
+
+  refresh.onclick = function() {
+
+    chrome.storage.local.remove(
+      [ 'slugs', 'titles' ],
+      function() {
+        var error = chrome.runtime.lastError;
+        if ( error ) { console.error( error ); }
+      }
+    )
+
+    canvas_list.innerHTML = '';
+  }
 
 });
