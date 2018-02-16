@@ -182,13 +182,13 @@ chrome.storage.local.get( [ 'status', 'dev_state' ], function( settings ) {
 // listen for context data from page relay
 //----------------------------------------
 
+var current_slug  = '';
+var current_title = '';
+
 window.addEventListener( 'message', function( event ) {
 
   // only window data
   if ( event.source != window ) { return; }
-
-  var current_slug  = '';
-  var current_title = '';
 
   if ( event.data.type && event.data.type == 'arena_data' ) {
 
@@ -299,8 +299,7 @@ window.addEventListener( 'message', function( event ) {
 
   var print_canvas     = document.getElementById( 'arena_toolkit_print' ).getElementsByClassName( 'arena_tool_canvas' )[ 0 ];
   var print_canvas_div = document.createElement( 'div' );
-  print_canvas_div.innerHTML = '<strong>Print Are.na: </strong><a target="_blank" href="https://printarena.now.sh/' + current_slug + '">' + current_title + '</a>';
+  print_canvas_div.innerHTML = '<strong>Print Are.na: </strong><a target="_blank" href="https://printarena.now.sh/?ch=' + current_slug + '">' + current_title + '</a>';
   print_canvas.appendChild( print_canvas_div );
-
 
 });

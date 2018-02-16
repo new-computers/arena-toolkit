@@ -1,0 +1,17 @@
+.arena_toolkit_history_refresh {
+  right: 62px;
+  bottom: 60px;
+  position: absolute;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #cbcbcb;
+}
+
+.arena_toolkit_history_refresh:hover {
+  cursor: pointer;
+  color: #585858;
+}
+
+.arena_tool_closed .arena_toolkit_history_refresh {
+  display: none;
+}
