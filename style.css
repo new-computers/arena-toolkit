@@ -126,6 +126,22 @@
   color: #585858;
 }
 
+#arena_toolkit_print.arena_tool_open {
+  height: 150px;
+}
+
+#arena_toolkit_print div {
+  padding: 10px;
+}
+
+#arena_toolkit_show.arena_tool_open {
+  height: 150px;
+}
+
+#arena_toolkit_show div {
+  padding: 10px;
+}
+
 .arena_tool_closed .arena_toolkit_history_refresh {
   display: none;
 }
