@@ -1,45 +1,93 @@
 
+//---------------------
+// attatch debug button
+//---------------------
+
+let arena_toolkit_debug = document.createElement( 'div' );
+
+arena_toolkit_debug.setAttribute( 'id', 'arena_toolkit_debug' );
+arena_toolkit.appendChild( arena_toolkit_debug );
+arena_toolkit_debug.innerHTML = '<h6 class="arena_toolkit_debug_text">debug</h6>';
+
+
 //-------------------
-// append toolkit div
+// debug toggle logic
 //-------------------
 
-const arena_toolkit = document.createElement( 'div' );
-arena_toolkit.setAttribute( 'id', 'arena_toolkit' );
-document.body.appendChild( arena_toolkit );
+chrome.storage.local.get( [ 'dev_state' ], function( debug ) {
 
+  if( debug.dev_state == 'dev' ) {
 
-//--------------
-// attatch tools
-//--------------
+    arena_toolkit_debug.classList.add( 'arena_toolkit_debug_dev' );
 
-function newTool( tool_name ) {
+  } else {
 
-  let arena_tool = document.createElement( 'div' );
+    arena_toolkit_debug.classList.remove( 'arena_toolkit_debug_dev' );
 
-  arena_tool.setAttribute( 'class', 'arena_tool arena_tool_closed' );
-  arena_tool.setAttribute( 'id', tool_name );
+  }
 
-  arena_tool.innerHTML = '<a class="arena_tool_resize" <a class="modalize-close js-modalize-close"><span class="iconic iconic-sm" data-glyph="x" title="x" aria-hidden="true"></span></a><div class="arena_tool_canvas"></div>';
+});
 
-  arena_toolkit.appendChild( arena_tool );
+// debug button listener
+arena_toolkit_debug.onclick = function() {
 
+  if ( arena_toolkit_debug.classList.contains( 'arena_toolkit_debug_dev' ) ) {
+
+    arena_toolkit_debug.classList.remove( 'arena_toolkit_debug_dev' );
+
+    chrome.storage.local.set( { dev_state: 'default' } )
+
+  } else {
+
+    arena_toolkit_debug.classList.add( 'arena_toolkit_debug_dev' );
+
+    chrome.storage.local.set( { dev_state: 'dev' } )
+
+  }
 }
 
-newTool( 'arena_toolkit_maps' );
-newTool( 'arena_toolkit_print' );
-newTool( 'arena_toolkit_show' );
-newTool( 'arena_toolkit_history' );
+
+//----------------------
+// reloaded notification
+//----------------------
+
+function updateNotification( message, duration ) {
+
+  let updated = document.createElement( 'h3' );
+
+  updated.setAttribute('class', 'arena_toolkit_updated arena_toolkit_updated_hidden');
+  updated.innerHTML = message;
+
+  setTimeout( function() {
+    updated.classList.remove( 'arena_toolkit_updated_hidden' );
+    updated.classList.add( 'arena_toolkit_updated_visible' );
+  }, 100 );
+
+  setTimeout( function() {
+    updated.classList.add( 'arena_toolkit_updated_hidden' )
+  }, duration - 1000 );
+
+  setTimeout( function() {
+    updated.parentNode.removeChild( updated );
+  }, duration );
+
+  document.body.appendChild( updated );
+}
 
 
-//------------------------
-// attatch settings button
-//------------------------
+// on content.js evaluation, retreive saved dev state
+chrome.storage.local.get( [ 'status', 'dev_state' ], function( settings ) {
 
-let arena_toolkit_settings = document.createElement( 'div' );
+  if ( settings.status == 'reloaded' && settings.dev_state == 'dev' ) {
 
-arena_toolkit_settings.setAttribute( 'id', 'arena_toolkit_settings' );
-arena_toolkit.appendChild( arena_toolkit_settings );
-arena_toolkit_settings.innerHTML = '<h6 class="arena_toolkit_settings_text">debug</h6>';
+    // notification
+    updateNotification( 'reloaded', 4000 );
+    console.log( '> content reloaded' )
+
+    // record reloaded message
+    chrome.storage.local.set( { status: 'notified' } );
+  }
+});
 
 
 //---------------
@@ -95,86 +143,6 @@ var arena_toolkit_tools = document.getElementsByClassName( 'arena_tool' );
     toggleTool( tool );
   }
 
-});
-
-
-//-------------------
-// debug toggle logic
-//-------------------
-
-chrome.storage.local.get( [ 'dev_state' ], function( settings ) {
-
-  if( settings.dev_state == 'dev' ) {
-
-    arena_toolkit_settings.classList.add( 'arena_toolkit_settings_dev' );
-
-  } else {
-
-    arena_toolkit_settings.classList.remove( 'arena_toolkit_settings_dev' );
-
-  }
-
-});
-
-// settings button listener
-arena_toolkit_settings.onclick = function() {
-
-  if ( arena_toolkit_settings.classList.contains( 'arena_toolkit_settings_dev' ) ) {
-
-    arena_toolkit_settings.classList.remove( 'arena_toolkit_settings_dev' );
-
-    chrome.storage.local.set( { dev_state: 'default' } )
-
-  } else {
-
-    arena_toolkit_settings.classList.add( 'arena_toolkit_settings_dev' );
-
-    chrome.storage.local.set( { dev_state: 'dev' } )
-
-  }
-}
-
-
-//----------------------
-// reloaded notification
-//----------------------
-
-function updateNotification( message, duration ) {
-
-  let updated = document.createElement( 'h3' );
-
-  updated.setAttribute('class', 'arena_toolkit_updated arena_toolkit_updated_hidden');
-  updated.innerHTML = message;
-
-  setTimeout( function() {
-    updated.classList.remove( 'arena_toolkit_updated_hidden' );
-    updated.classList.add( 'arena_toolkit_updated_visible' );
-  }, 100 );
-
-  setTimeout( function() {
-    updated.classList.add( 'arena_toolkit_updated_hidden' )
-  }, duration - 1000 );
-
-  setTimeout( function() {
-    updated.parentNode.removeChild( updated );
-  }, duration );
-
-  document.body.appendChild( updated );
-}
-
-
-// on content.js evaluation, retreive saved dev state
-chrome.storage.local.get( [ 'status', 'dev_state' ], function( settings ) {
-
-  if ( settings.status == 'reloaded' && settings.dev_state == 'dev' ) {
-
-    // notification
-    updateNotification( 'reloaded', 4000 );
-    console.log( '> content reloaded' )
-
-    // record reloaded message
-    chrome.storage.local.set( { status: 'notified' } );
-  }
 });
 
 

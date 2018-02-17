@@ -5,29 +5,31 @@
   "description": "Access to tools",
   "content_scripts": [{
     "css": [
-      "style.css",
+      "core/style.css",
+      "tools/maps/style.css",
       "tools/print/style.css",
       "tools/show/style.css",
       "tools/history/style.css"
     ],
     "js": [
-      "inject.js",
-      "content.js",
+      "core/inject.js",
+      "tools/maps/content.js",
       "tools/print/content.js",
       "tools/show/content.js",
-      "tools/history/content.js"
+      "tools/history/content.js",
+      "core/content.js"
       ],
     "matches": ["https://www.are.na/*"]
   }],
   "background": {
     "scripts": [
+      "core/background.js",
+      "core/reload.js",
       "tools/maps/pure.js",
-      "background.js",
-      "reload.js",
       "tools/maps/bower_components/vis/dist/vis.js"
       ]
   },
-  "web_accessible_resources" : ["relay.js"],
+  "web_accessible_resources" : ["core/relay.js"],
   "permissions": [
     "tabs",
     "storage"

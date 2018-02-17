@@ -7,7 +7,7 @@
     z-index: 3000;
 }
 
-#arena_toolkit_settings {
+#arena_toolkit_debug {
   margin: 10px 10px 10px auto;
   display: flex;
   border: 2px solid #cbcbcb;
@@ -18,15 +18,15 @@
   position: relative;
 }
 
-#arena_toolkit_settings:hover {
+#arena_toolkit_debug:hover {
   cursor: pointer;
 }
 
-#arena_toolkit_settings.arena_toolkit_settings_dev {
+#arena_toolkit_debug.arena_toolkit_debug_dev {
   background: #cbcbcb;
 }
 
-.arena_toolkit_settings_text {
+.arena_toolkit_debug_text {
   font-size: 0.65rem;
   position: absolute;
   bottom: 6px;
@@ -34,7 +34,7 @@
   display: none;
 }
 
-.arena_toolkit_settings_dev .arena_toolkit_settings_text {
+.arena_toolkit_debug_dev .arena_toolkit_debug_text {
   color: white;
   display: block;
   margin: 2px auto;
