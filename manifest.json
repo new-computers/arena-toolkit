@@ -14,6 +14,8 @@
     "js": [
       "core/inject.js",
       "tools/maps/content.js",
+      "tools/maps/bower_components/vis/dist/vis.js",
+      "tools/maps/pure.js",
       "tools/print/content.js",
       "tools/show/content.js",
       "tools/history/content.js",
@@ -24,9 +26,7 @@
   "background": {
     "scripts": [
       "core/background.js",
-      "core/reload.js",
-      "tools/maps/pure.js"
-//      "tools/maps/bower_components/vis/dist/vis.js"
+      "core/reload.js"
       ]
   },
   "web_accessible_resources" : ["core/relay.js"],

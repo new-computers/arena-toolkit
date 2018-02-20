@@ -14,9 +14,9 @@ arena_toolkit_debug.innerHTML = '<h6 class="arena_toolkit_debug_text">debug</h6>
 // debug toggle logic
 //-------------------
 
-chrome.storage.local.get( [ 'dev_state' ], ( debug ) => {
+chrome.storage.local.get( [ 'dev_state' ], ( settings ) => {
 
-  if( debug.dev_state == 'dev' ) {
+  if( settings.dev_state == 'dev' ) {
 
     arena_toolkit_debug.classList.add( 'arena_toolkit_debug_dev' );
 

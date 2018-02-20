@@ -13,4 +13,4 @@ arenaContext.then( context => {
 
   }
 
-});
+} );
