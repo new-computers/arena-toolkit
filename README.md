@@ -7,7 +7,7 @@ The [Are.na Toolkit](https://www.are.na/sam-hart/are-na-toolkit) is a developmen
 ## Installing the chrome extension
 
 1. `git clone git@github.com:hxrts/arena-toolkit.git`
-2. From [chrome://extensions/](chrome://extensions/) make sure the "Developer mode" box in the top right is checked.
+2. From chrome://extensions/ make sure the "Developer mode" box in the top right is checked.
 3. Click “Load unpacked extension…” and select the Are.na Toolkit repo directory. Alternatively, drag the repo folder from your file browser onto the Chrome extensions page.
 
 Repo includes a modified version of xpl's reloading [script](https://github.com/xpl/crx-hotreload) to refresh the background processes on detection of file changes. This script will also attempt to auto-refresh last focused Are.na window to flush content.js.
