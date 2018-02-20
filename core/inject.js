@@ -3,7 +3,7 @@
 // inject relay.js into Are.na DOM
 //--------------------------------
 
-function injectScript( file_path, tag ) {
+const injectScript = ( file_path, tag ) => {
 
   var node   = document.getElementsByTagName( tag )[ 0 ];
   var script = document.createElement( 'script' );
@@ -31,7 +31,7 @@ document.body.appendChild( arena_toolkit );
 // attatch tools
 //--------------
 
-function newTool( tool_name ) {
+const newTool = ( tool_name ) => {
 
   let arena_tool = document.createElement( 'div' );
 
@@ -50,41 +50,43 @@ function newTool( tool_name ) {
 
 const arenaContext = new Promise( ( resolve, reject ) => {
 
-  var current_slug  = '';
-  var current_title = '';
-
-  window.addEventListener( 'message', function( event ) {
+  window.addEventListener( 'message', ( event ) => {
 
     if ( event.source == window && event.data.type && event.data.type == 'arena_data' ) {
 
-      var arena_data   = event.data.object;
-      var current_path = arena_data.CURRENT_PATH;
+      let context   = event.data.object;
 
-      if ( arena_data.CURRENT_ACTION ) {
+      if ( context.CURRENT_ACTION && context.CURRENT_ACTION == 'channel' ) {
 
-        if ( arena_data.CURRENT_ACTION == 'channel' ) {
+        resolve( {
+          type:      'channel',
+          slug:      context.CHANNEL.slug,
+          title:     context.CHANNEL.title,
+          id:        context.CHANNEL.id,
+          status:    context.CHANNEL.status,
+          id:        context.CHANNEL.user.id,
+          user_slug: context.CHANNEL.user.slug,
+          user_name: context.CHANNEL.user.full_name
+        } );
 
-          current_slug  = arena_data.CHANNEL.slug;
-          current_title = arena_data.CHANNEL.title;
-          // arena_data.CHANNEL.id
-          // arena_data.CHANNEL.status
-          // arena_data.CHANNEL.user.id
-          // arena_data.CHANNEL.user.slug
-          // arena_data.CHANNEL.user.full_name
+      } else if ( context.CURRENT_ACTION && context.CURRENT_ACTION == 'profile' ) {
 
-        } else if ( arena_data.CURRENT_ACTION == 'profile' ) {
+        resolve( {
+          type:      'profile',
+          slug:      context.USER.slug,
+          title:     context.USER.username,
+          id:        context.USER.profile_id,
+          avatar:    context.USER.avatar_image.display
+        } );
 
-          current_slug  = arena_data.USER.slug;
-          current_title = arena_data.USER.username;
-          // arena_data.USER.profile_id
-          // arena_data.USER.avatar_image.display
+      } else {
 
-        }
+        resolve( { type: 'other' } );
+
       }
+
     }
 
-    resolve( { current_slug: current_slug, current_title: current_title } );
-
-  });
+  })
 
 });

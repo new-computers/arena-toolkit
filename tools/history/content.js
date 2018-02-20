@@ -4,17 +4,14 @@ newTool( 'arena_toolkit_history' );
 
 arenaContext.then( context => {
 
-  var current_slug = context.current_slug;
-  var current_title = context.current_title;
+  let current_slug = context.slug;
+  let current_title = context.title;
 
-  var history_canvas      = document.getElementById( 'arena_toolkit_history' ).getElementsByClassName( 'arena_tool_canvas' )[ 0 ];
-  var history_canvas_list = document.createElement( 'ul' );
-
-  function getStored( callback ) {
+  let getStored = ( callback ) => {
     chrome.storage.local.get(
       [ 'slugs', 'titles' ],
 
-      function ( data ) {
+      ( data ) => {
 
         var slugs;
         var titles;
@@ -35,15 +32,15 @@ arenaContext.then( context => {
     )
   }
 
-  var history_canvas      = document.getElementById( 'arena_toolkit_history' ).getElementsByClassName( 'arena_tool_canvas' )[ 0 ];
-  var history_canvas_list = document.createElement( 'ul' );
+  let history_canvas      = document.getElementById( 'arena_toolkit_history' ).getElementsByClassName( 'arena_tool_canvas' )[ 0 ];
+  let history_canvas_list = document.createElement( 'ul' );
 
-  getStored( function( data ) {
+  getStored( ( data ) => {
 
     if ( data.slugs && data.titles ) {
 
-      var slugs  = data.slugs;
-      var titles = data.titles;
+      let slugs  = data.slugs;
+      let titles = data.titles;
 
       chrome.storage.local.set( { 'slugs': slugs, 'titles': titles } )
 
@@ -55,15 +52,15 @@ arenaContext.then( context => {
     }
   } );
 
-  var refresh = document.createElement( 'div' );
+  let refresh = document.createElement( 'div' );
   refresh.innerHTML = '<div class="arena_toolkit_history_refresh">♺</div>';
   document.getElementById( 'arena_toolkit_history' ).appendChild( refresh );
 
-  refresh.onclick = function() {
+  refresh.onclick = () => {
 
     chrome.storage.local.remove(
       [ 'slugs', 'titles' ],
-      function() {
+      () => {
         var error = chrome.runtime.lastError;
         if ( error ) { console.error( error ); }
       }
