@@ -16,6 +16,6 @@ Repo includes a modified version of xpl's reloading [script](https://github.com/
 
 New tools welcome by pull request. Or, fork this repo and make your own project.
 
-Use any framework or language you like. Start by placing your tool code into a new subdirectory of /tools, add any requred imports to manifest.json, and then see /content.js and /background.js for examples on how to begin.
+Use any framework or language you like. Start by placing your tool code into a new subdirectory of /tools, add any requred imports to manifest.json, and then take a look at a tool like Print Are.na for an example of how to begin (more documentation coming soon).
 
 Core code will aim for [idomatic.js](https://github.com/rwaldron/idiomatic.js/), but tools can be developed in the style of the author's choosing.
