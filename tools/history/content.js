@@ -4,11 +4,10 @@ newTool( 'arena_toolkit_history' );
 
 arenaContext.then( context => {
 
-  let current_slug = context.slug;
-  let current_title = context.title;
-
   let getStored = ( callback ) => {
+
     chrome.storage.local.get(
+
       [ 'slugs', 'titles' ],
 
       ( data ) => {
@@ -16,18 +15,25 @@ arenaContext.then( context => {
         var slugs;
         var titles;
 
-        if ( data.slugs && data.titles && current_slug && current_title ) {
-          slugs  = [ current_slug ].concat( data.slugs );
-          titles = [ current_title ].concat( data.titles );
+        if ( data.slugs && data.titles && context.slug && context.title ) {
+
+          slugs  = [ context.slug ].concat( data.slugs );
+          titles = [ context.title ].concat( data.titles );
+
         } else if ( data.slugs && data.titles ){
+
           slugs  = data.slugs;
           titles = data.titles;
-        } else if ( current_slug && current_title ) {
-          slugs  = [ current_slug ]
-          titles = [ current_title ]
+
+        } else if ( context.slug && context.title ) {
+
+          slugs  = [ context.slug ]
+          titles = [ context.title ]
+
         }
 
         callback( { slugs: slugs, titles: titles } )
+
       }
     )
   }
