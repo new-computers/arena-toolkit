@@ -25,8 +25,8 @@
     "scripts": [
       "core/background.js",
       "core/reload.js",
-      "tools/maps/pure.js",
-      "tools/maps/bower_components/vis/dist/vis.js"
+      "tools/maps/pure.js"
+//      "tools/maps/bower_components/vis/dist/vis.js"
       ]
   },
   "web_accessible_resources" : ["core/relay.js"],

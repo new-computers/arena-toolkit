@@ -13,8 +13,10 @@ const filesInDirectory = dir => new Promise ( resolve =>
 
 
 const timestampForFilesInDirectory = dir =>
-  filesInDirectory ( dir ).then ( files =>
-    files.map ( f => f.name + f.lastModifiedDate ).join () )
+  filesInDirectory ( dir ).then (
+    files => files.map ( f => f.name + f.lastModifiedDate ).join ()
+  )
+
 
 const reload = () => {
 
