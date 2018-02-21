@@ -20,7 +20,7 @@ arenaContext.then( context => {
 
         if ( data.slugs && data.titles && context.slug && context.title ) {
 
-          slugs  = [ context.slug ].concat( data.slugs );
+          slugs  = [ (context.full_slug || context.slug) ].concat( data.slugs );
           titles = [ context.title ].concat( data.titles );
 
         } else if ( data.slugs && data.titles ){
