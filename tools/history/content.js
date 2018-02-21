@@ -36,7 +36,7 @@ arenaContext.then( context => {
         }
 
         for( let i = 0; i < slugs.length; i++ ) {
-          history_canvas_list.innerHTML += '<li><a href="https://are.na/' +  slugs[ i ] + '">' + titles[ i ] + '</a></li>';
+          history_canvas_list.innerHTML += '<li><a href="/' +  slugs[ i ] + '">' + titles[ i ] + '</a></li>';
         }
 
         history_canvas.appendChild( history_canvas_list );
