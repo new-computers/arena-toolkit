@@ -1,4 +1,5 @@
 
+// query files in toolkit directory
 const filesInDirectory = dir => new Promise ( resolve => {
   dir.createReader ().readEntries ( entries =>
     Promise.all ( entries.filter ( e => e.name[ 0 ] !== '.' ).map ( e =>
@@ -12,12 +13,14 @@ const filesInDirectory = dir => new Promise ( resolve => {
 });
 
 
+// fetch last modified timestamps
 const timestampForFilesInDirectory = dir =>
   filesInDirectory ( dir ).then (
     files => files.map ( f => f.name + f.lastModifiedDate ).join ()
   )
 
 
+// reload Are.na tab if (last focused)
 const reload = () => {
 
   chrome.tabs.query (
@@ -33,6 +36,7 @@ const reload = () => {
 }
 
 
+// watch for timestamp changes
 const watchChanges = ( dir, lastTimestamp ) => {
   timestampForFilesInDirectory ( dir ).then (
     timestamp => {
@@ -47,6 +51,7 @@ const watchChanges = ( dir, lastTimestamp ) => {
 }
 
 
+// initialize timestamp watch in development mode
 chrome.management.getSelf ( self => {
   if ( self.installType === 'development' ) {
     chrome.runtime.getPackageDirectoryEntry ( dir => watchChanges ( dir ) )

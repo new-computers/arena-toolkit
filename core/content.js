@@ -80,12 +80,13 @@ arena_toolkit_debug.onclick = () => {
 }
 
 
-//---------------
-// resizing logic
-//---------------
+//------------------------------
+// tool container resizing logic
+//------------------------------
 
-arenaContext.then( () => {
+arenaContext.then( () => {  // perform after Are.na info fetched & tools loaded
 
+  // toggle state function
   let toggleTool = ( tool ) => {
 
     if ( tool.classList.contains( "arena_tool_closed" ) ) {
