@@ -1,8 +1,9 @@
 
-//---------------------
-// attatch debug button
-//---------------------
+//-----------------------------------
+// debug logic & refresh notification
+//-----------------------------------
 
+// attatch debug button
 const arena_toolkit_debug = document.createElement( 'div' );
 
 arena_toolkit_debug.setAttribute( 'id', 'arena_toolkit_debug' );
@@ -10,47 +11,7 @@ arena_toolkit.appendChild( arena_toolkit_debug );
 arena_toolkit_debug.innerHTML = '<h6 class="arena_toolkit_debug_text">debug</h6>';
 
 
-//-------------------
-// debug toggle logic
-//-------------------
-
-chrome.storage.local.get( [ 'dev_state' ], ( settings ) => {
-
-  if( settings.dev_state == 'dev' ) {
-
-    arena_toolkit_debug.classList.add( 'arena_toolkit_debug_dev' );
-
-  } else {
-
-    arena_toolkit_debug.classList.remove( 'arena_toolkit_debug_dev' );
-
-  }
-
-} );
-
-// debug button listener
-arena_toolkit_debug.onclick = () => {
-
-  if ( arena_toolkit_debug.classList.contains( 'arena_toolkit_debug_dev' ) ) {
-
-    arena_toolkit_debug.classList.remove( 'arena_toolkit_debug_dev' );
-
-    chrome.storage.local.set( { dev_state: 'default' } )
-
-  } else {
-
-    arena_toolkit_debug.classList.add( 'arena_toolkit_debug_dev' );
-
-    chrome.storage.local.set( { dev_state: 'dev' } )
-
-  }
-}
-
-
-//----------------------
-// reloaded notification
-//----------------------
-
+// notification display function
 const updateNotification = ( message, duration ) => {
 
   let updated = document.createElement( 'h3' );
@@ -75,8 +36,18 @@ const updateNotification = ( message, duration ) => {
 }
 
 
-// on content.js evaluation, retreive saved dev state
+// fetch and reconstitute debug state
 chrome.storage.local.get( [ 'status', 'dev_state' ], ( settings ) => {
+
+  if( settings.dev_state == 'dev' ) {
+
+    arena_toolkit_debug.classList.add( 'arena_toolkit_debug_dev' );
+
+  } else {
+
+    arena_toolkit_debug.classList.remove( 'arena_toolkit_debug_dev' );
+
+  }
 
   if ( settings.status == 'reloaded' && settings.dev_state == 'dev' ) {
 
@@ -88,6 +59,25 @@ chrome.storage.local.get( [ 'status', 'dev_state' ], ( settings ) => {
     chrome.storage.local.set( { status: 'notified' } );
   }
 });
+
+
+// add debug button listener
+arena_toolkit_debug.onclick = () => {
+
+  if ( arena_toolkit_debug.classList.contains( 'arena_toolkit_debug_dev' ) ) {
+
+    arena_toolkit_debug.classList.remove( 'arena_toolkit_debug_dev' );
+
+    chrome.storage.local.set( { dev_state: 'default' } )
+
+  } else {
+
+    arena_toolkit_debug.classList.add( 'arena_toolkit_debug_dev' );
+
+    chrome.storage.local.set( { dev_state: 'dev' } )
+
+  }
+}
 
 
 //---------------
