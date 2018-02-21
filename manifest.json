@@ -14,6 +14,7 @@
     "js": [
       "core/inject.js",
       "tools/maps/content.js",
+      // "tools/maps/bower_components/vis/dist/vis.js",
       "tools/maps/pure.js",
       "tools/print/content.js",
       "tools/show/content.js",
