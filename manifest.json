@@ -14,14 +14,17 @@
     "js": [
       "core/inject.js",
       "tools/maps/content.js",
-      "tools/maps/bower_components/vis/dist/vis.js",
+      // "tools/maps/bower_components/vis/dist/vis.js",
       "tools/maps/pure.js",
       "tools/print/content.js",
       "tools/show/content.js",
       "tools/history/content.js",
       "core/content.js"
       ],
-    "matches": ["https://www.are.na/*"]
+    "matches": [
+      "https://www.are.na/*",
+      "https://are.na/*"
+      ]
   }],
   "background": {
     "scripts": [

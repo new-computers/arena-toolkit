@@ -66,7 +66,8 @@ const arenaContext = new Promise( ( resolve, reject ) => {
           status:    context.CHANNEL.status,
           id:        context.CHANNEL.user.id,
           user_slug: context.CHANNEL.user.slug,
-          user_name: context.CHANNEL.user.full_name
+          user_name: context.CHANNEL.user.full_name,
+          full_slug: [context.CHANNEL.user.slug, context.CHANNEL.slug].join('/')
         } );
 
       } else if ( context.CURRENT_ACTION && context.CURRENT_ACTION == 'profile' ) {
