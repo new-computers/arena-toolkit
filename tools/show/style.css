@@ -1,7 +1,31 @@
-#arena_toolkit_show.arena_tool_open {
-  height: 150px;
+
+body.arena_toolkit_show_open {
+  overflow: hidden;
 }
 
-#arena_toolkit_show div {
-  padding: 10px;
+#arena_toolkit_show.arena_tool_open {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+#arena_toolkit_show.arena_tool_open .arena_tool_canvas {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  overflow: hidden;
+}
+
+#arena_toolkit_show.arena_tool_open .arena_tool_resize {
+  transform: rotate(0deg);
+  position: fixed;
+  bottom: 22px;
+  right: 22px;
 }
