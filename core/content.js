@@ -86,18 +86,24 @@ arena_toolkit_debug.onclick = () => {
 
 arenaContext.then( () => {  // perform after Are.na info fetched & tools loaded
 
-  // toggle state function
-  let toggleTool = ( tool ) => {
+  // toggle tool state function
+  let toggleTool = ( tool, state ) => {
 
-    if ( tool.classList.contains( "arena_tool_closed" ) ) {
+    if ( state == 'open' ) {
 
       tool.classList.add( "arena_tool_open" );
       tool.classList.remove( "arena_tool_closed" );
+
+      document.body.classList.add( tool.id + '_open' );
+      document.body.classList.remove( tool.id + '_closed' );
 
     } else {
 
       tool.classList.add( "arena_tool_closed" );
       tool.classList.remove( "arena_tool_open" );
+
+      document.body.classList.add( tool.id + '_closed' );
+      document.body.classList.remove( tool.id + '_open' );
 
     }
   }
@@ -114,7 +120,11 @@ arenaContext.then( () => {  // perform after Are.na info fetched & tools loaded
 
      if( settings[ current_tool ] && settings[ current_tool ] == 'open' ) {
 
-       toggleTool( tool );
+       toggleTool( tool, 'open' );
+
+     } else {
+
+       toggleTool( tool, 'closed' );
 
      }
 
@@ -127,13 +137,16 @@ arenaContext.then( () => {  // perform after Are.na info fetched & tools loaded
 
         chrome.storage.local.set({ [ current_tool ]: 'open' })
 
+        toggleTool( tool, 'open' );
+
       } else {
 
         chrome.storage.local.set({ [ current_tool ]: 'closed' })
 
+        toggleTool( tool, 'closed' );
+
       }
 
-      toggleTool( tool );
     }
 
   });

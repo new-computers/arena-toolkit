@@ -1,27 +1,11 @@
 #arena_toolkit_print.arena_tool_open {
-  height: 100%;
-  width: 100%;
-  position: fixed;
-  left: 0;
-  top: 0;
-  border: 0;
-}
-
-#arena_toolkit_print.arena_tool_open .arena_tool_canvas {
-  padding: 0;
-  width: calc(100% - 90px);
-  height: calc(100% - 90px);
-  border: none;
-  overflow: hidden;
+  height: 220px;
 }
 
 #arena_toolkit_print div {
   padding: 10px;
 }
 
-#arena_toolkit_print.arena_tool_open .arena_tool_resize {
-  transform: rotate(0deg);
-  position: absolute;
-  top: 50px;
-  right: 22px;
+#arena_toolkit_print h5 {
+  margin-top: 0;
 }
