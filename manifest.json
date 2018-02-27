@@ -9,7 +9,8 @@
       "tools/maps/style.css",
       "tools/print/style.css",
       "tools/show/style.css",
-      "tools/history/style.css"
+      "tools/history/style.css",
+      "tools/related/style.css"
     ],
     "js": [
       "core/inject.js",
@@ -19,6 +20,7 @@
       "tools/print/content.js",
       "tools/show/content.js",
       "tools/history/content.js",
+      "tools/related/content.js",
       "core/content.js"
       ],
     "matches": [

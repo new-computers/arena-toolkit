@@ -1,9 +1,9 @@
 
 arenaContext.then( context => {
 
-  if ( context.type != 'other' ) {
+  if ( context.type == 'channel' || context.type == 'user' ) {
 
-    newTool( 'arena_toolkit_show' );
+    newTool( 'show' );
 
     let show_canvas     = document.getElementById( 'arena_toolkit_show' ).getElementsByClassName( 'arena_tool_canvas' )[ 0 ];
 

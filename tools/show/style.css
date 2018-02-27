@@ -7,11 +7,12 @@ body.arena_toolkit_show_open {
   height: 100%;
   width: 100%;
   position: fixed;
-  left: 0;
+  right: 0;
   top: 0;
   border: 0;
   margin: 0;
   padding: 0;
+  z-index: 2;
 }
 
 #arena_toolkit_show.arena_tool_open .arena_tool_canvas {
@@ -27,5 +28,9 @@ body.arena_toolkit_show_open {
   transform: rotate(0deg);
   position: fixed;
   bottom: 22px;
-  right: 22px;
+  left: 22px;
+}
+
+#arena_toolkit_show.arena_tool_open .arena_tool_title {
+  display: none;
 }
