@@ -12,6 +12,7 @@ body.arena_toolkit_show_open {
   border: 0;
   margin: 0;
   padding: 0;
+  z-index: 2;
 }
 
 #arena_toolkit_show.arena_tool_open .arena_tool_canvas {
@@ -28,4 +29,8 @@ body.arena_toolkit_show_open {
   position: fixed;
   bottom: 22px;
   left: 22px;
+}
+
+#arena_toolkit_show.arena_tool_open .arena_tool_title {
+  display: none;
 }

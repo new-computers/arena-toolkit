@@ -1,5 +1,5 @@
 
-newTool( 'arena_toolkit_history' );
+newTool( 'history' );
 
 
 arenaContext.then( context => {

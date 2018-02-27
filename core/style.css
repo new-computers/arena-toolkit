@@ -37,7 +37,13 @@
   background: #cbcbcb;
 }
 
+#arena_toolkit:hover .arena_toolkit_debug_text {
+  opacity: 1;
+}
 .arena_toolkit_debug_text {
+  transition-timing-function: ease-in-out;
+  transition: opacity 0.2s;
+  opacity: 0;
   font-size: 0.65rem;
   position: absolute;
   bottom: 6px;
@@ -64,6 +70,26 @@
   border: 2px solid #cbcbcb;
   padding: 10px;
   position: relative;
+}
+
+.arena_tool_title {
+  margin: -2px 0 0 -12px;
+  float: left;
+  top: 0;
+  left: 0;
+  width: 50px;
+  font-size: 10px;
+  transform: rotate(-90deg);
+  transform-origin: 100% 0;
+  position: absolute;
+  line-height: 40px;
+  text-align: center;
+}
+
+.arena_tool_open .arena_tool_title {
+  transform: rotate(0deg);
+  top: 5px;
+  left: 65px;
 }
 
 .arena_tool_open {
