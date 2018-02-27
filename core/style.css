@@ -17,7 +17,7 @@
 }
 
 #arena_toolkit_debug {
-  margin: 10px auto 10px -40px;
+  margin: 8px auto 8px -41px;
   transition-timing-function: ease-in-out;
   transition: margin 0.2s;
   display: flex;
@@ -62,7 +62,7 @@
 }
 
 .arena_tool {
-  margin: 10px auto 10px -40px;
+  margin: 8px auto 8px -41px;
   transition-timing-function: ease-in-out;
   transition: margin 0.2s;
   display: flex;
@@ -73,7 +73,7 @@
 }
 
 .arena_tool_title {
-  margin: -2px 0 0 -12px;
+  margin: -1px 0 0 -12px;
   float: left;
   top: 0;
   left: 0;
@@ -89,13 +89,13 @@
 .arena_tool_open .arena_tool_title {
   transform: rotate(0deg);
   top: 5px;
-  left: 65px;
+  left: 57px;
 }
 
 .arena_tool_open {
   height: 440px;
   width: 440px;
-  margin: 10px auto 10px 10px;
+  margin: 8px auto 8px 8px;
 }
 
 .arena_tool_closed {
