@@ -2,14 +2,24 @@
 /* toolkit */
 
 #arena_toolkit {
-    position: fixed;
-    bottom: 0px;
-    right: 0px;
-    z-index: 5000;
+  position: fixed;
+  bottom: 0px;
+  left: 0px;
+  z-index: 5000;
+}
+
+#arena_toolkit:hover .arena_tool {
+  margin-left: 10px;
+}
+
+#arena_toolkit:hover #arena_toolkit_debug {
+  margin-left: 10px;
 }
 
 #arena_toolkit_debug {
-  margin: 10px 10px 10px auto;
+  margin: 8px auto 8px -41px;
+  transition-timing-function: ease-in-out;
+  transition: margin 0.2s;
   display: flex;
   border: 2px solid #cbcbcb;
   padding: 10px;
@@ -27,11 +37,17 @@
   background: #cbcbcb;
 }
 
+#arena_toolkit:hover .arena_toolkit_debug_text {
+  opacity: 1;
+}
 .arena_toolkit_debug_text {
+  transition-timing-function: ease-in-out;
+  transition: opacity 0.2s;
+  opacity: 0;
   font-size: 0.65rem;
   position: absolute;
   bottom: 6px;
-  right: 16px;
+  left: 16px;
   display: none;
 }
 
@@ -41,12 +57,14 @@
   margin: 2px auto;
   width: 100%;
   bottom: 0;
-  right: 0;
+  left: 0;
   text-align: center;
 }
 
 .arena_tool {
-  margin: 10px 10px 10px auto;
+  margin: 8px auto 8px -41px;
+  transition-timing-function: ease-in-out;
+  transition: margin 0.2s;
   display: flex;
   background: white;
   border: 2px solid #cbcbcb;
@@ -54,9 +72,30 @@
   position: relative;
 }
 
+.arena_tool_title {
+  margin: -1px 0 0 -12px;
+  float: left;
+  top: 0;
+  left: 0;
+  width: 50px;
+  font-size: 10px;
+  transform: rotate(-90deg);
+  transform-origin: 100% 0;
+  position: absolute;
+  line-height: 40px;
+  text-align: center;
+}
+
+.arena_tool_open .arena_tool_title {
+  transform: rotate(0deg);
+  top: 5px;
+  left: 57px;
+}
+
 .arena_tool_open {
-    height: 440px;
-    width: 440px;
+  height: 440px;
+  width: 440px;
+  margin: 8px auto 8px 8px;
 }
 
 .arena_tool_closed {
@@ -79,10 +118,7 @@
 .arena_tool_open .arena_tool_resize {
     transform: rotate(0deg);
     position: absolute;
-    right: 10px;
-}
-
-.arena_tool_closed .arena_tool_resize {
+    left: 10px;
 }
 
 .arena_tool_resize:hover {
@@ -110,7 +146,7 @@
 }
 
 .arena_tool_closed .arena_tool_canvas {
-  border: none;
+  display: none;
 }
 
 /* updated notification */
@@ -119,7 +155,7 @@
   position: fixed;
   padding: 8px 15px;
   bottom: 10px;
-  left: 10px;
+  right: 10px;
   background: white;
   border: solid 2px #cbcbcb;
 }

@@ -1,5 +1,5 @@
 
-newTool( 'arena_toolkit_maps' );
+newTool( 'maps' );
 
 
 arenaContext.then( context => {
